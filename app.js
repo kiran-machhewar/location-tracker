@@ -1,7 +1,7 @@
 //connecting to mongo db
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://smachhewar:ironman123@ds119223.mlab.com:19223/locations');
+mongoose.connect('mongodb://'+process.env.mongoDBUsername+':'+process.env.mongoDBPassword+'@ds119223.mlab.com:19223/locations');
 // call the packages we need
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
