@@ -83,7 +83,7 @@
 
 
         function updateServer(lat,long){
-            $.post( "http://localhost:1234/locations", { emailId: jQuery('#emailId').val(), lat: lat, long :long })
+            $.post( "/locations", { emailId: jQuery('#emailId').val(), lat: lat, long :long })
             .done(function( data ) {
               console.log(data.message);
             });
