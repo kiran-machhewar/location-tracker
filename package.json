@@ -1,0 +1,21 @@
+{
+  "name": "location-tracker",
+  "version": "1.0.0",
+  "description": "To capture the location of user",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node app.js"
+  },
+  "author": "Kiran Machhewar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.0.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.0.0",
+    "mongoose": "^4.10.8"
+  },
+  "engines": {
+    "node": "8.1.2"
+  }
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Location Tracker</title>
+
+    <!-- Bootstrap -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Location Tracker</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <div id="formPanel">
+          
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="emailId" placeholder="Email">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="startLocationTracking(); return;">Start Tracking Location</button>
+         
+        </div>
+        <h2 class="bg-success"  id="message"></h2>
+      </div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        var gpsLocation = {};
+
+        function startLocationTracking(){
+
+          if(!jQuery('#emailId').val()){
+              alert('Please enter email id.');
+              return;
+          }
+          var message = document.getElementById("message");
+          
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition);
+              setInterval(function() {
+                  startLocationTracking();
+              }, 5000);
+          } else {
+              message.innerHTML = "Geolocation is not supported by this browser.";
+          }
+          
+          function showPosition(position) {
+              jQuery('#formPanel').hide();
+              
+              message.innerHTML = "Tracking is on, <br/>Latitude: " + position.coords.latitude + 
+              "<br>Longitude: " + position.coords.longitude; 
+              if(position.coords.latitude == gpsLocation.lat && position.coords.longitude == gpsLocation.long){
+                  return;
+              }
+              gpsLocation.lat = position.coords.latitude;
+              gpsLocation.long = position.coords.longitude;
+              updateServer(position.coords.latitude,position.coords.longitude);
+
+          }
+        }
+
+
+        function updateServer(lat,long){
+            $.post( "http://localhost:1234/locations", { emailId: jQuery('#emailId').val(), lat: lat, long :long })
+            .done(function( data ) {
+              console.log(data.message);
+            });
+
+        }
+
+        
+    </script>
+
+  </body>
+</html>
