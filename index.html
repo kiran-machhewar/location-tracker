@@ -47,14 +47,26 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script>
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
         var gpsLocation = {};
 
         function startLocationTracking(){
 
-          if(!jQuery('#emailId').val()){
-              alert('Please enter email id.');
-              return;
-          }
+          var trackingId = getUrlParameter('trackingId');
           var message = document.getElementById("message");
           
           if (navigator.geolocation) {
@@ -83,12 +95,14 @@
 
 
         function updateServer(lat,long){
-            $.post( "/locations", { emailId: jQuery('#emailId').val(), lat: lat, long :long })
+            $.post( "/locations", { emailId: trackingId , lat: lat, long :long })
             .done(function( data ) {
               console.log(data.message);
             });
 
         }
+
+        startLocationTracking();
 
         
     </script>
