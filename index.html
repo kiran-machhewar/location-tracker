@@ -47,6 +47,14 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script>
+        var simulateNavigation = false;
+        var deviation = 0.0000;
+        setInterval(function() {
+                  if(simulateNavigation){
+                     deviation = deviation + 0.0001;
+                  }
+                  
+        }, 5000);
         var getUrlParameter = function getUrlParameter(sParam) {
             var sPageURL = decodeURIComponent(window.location.search.substring(1)),
                 sURLVariables = sPageURL.split('&'),
@@ -80,13 +88,13 @@
           function showPosition(position) {
               jQuery('#formPanel').hide();
               
-              message.innerHTML = "Tracking is on, <br/>Latitude: " + position.coords.latitude + 
-              "<br>Longitude: " + position.coords.longitude; 
+              message.innerHTML = "Tracking is on, <br/>Latitude: " + ( position.coords.latitude + deviation ) + 
+              "<br>Longitude: " + ( position.coords.longitude + deviation ) ; 
               if(position.coords.latitude == gpsLocation.lat && position.coords.longitude == gpsLocation.long){
                   return;
               }
-              gpsLocation.lat = position.coords.latitude;
-              gpsLocation.long = position.coords.longitude;
+              gpsLocation.lat = position.coords.latitude + deviation;
+              gpsLocation.long = position.coords.longitude + deviation;
               updateServer(position.coords.latitude,position.coords.longitude);
 
           }
