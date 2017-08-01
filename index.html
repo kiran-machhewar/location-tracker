@@ -48,10 +48,11 @@
 
     <script>
         var simulateNavigation = false;
+        var factor = 0.01;
         var deviation = 0.0000;
         setInterval(function() {
                   if(simulateNavigation){
-                     deviation = deviation + 0.001;
+                     deviation = deviation + factor;
                   }
                   
         }, 1000);
