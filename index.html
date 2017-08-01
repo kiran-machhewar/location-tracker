@@ -48,7 +48,7 @@
 
     <script>
         var simulateNavigation = false;
-        var factor = 0.01;
+        var factor = 0.001;
         var deviation = 0.0000;
         setInterval(function() {
                   if(simulateNavigation){
@@ -94,7 +94,7 @@
               }
               gpsLocation.lat = position.coords.latitude + deviation;
               gpsLocation.long = position.coords.longitude + deviation;
-              updateServer(position.coords.latitude,position.coords.longitude);
+              updateServer((position.coords.latitude + deviation), ( position.coords.longitude + deviation ));
 
           }
         }
