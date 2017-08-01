@@ -78,9 +78,7 @@
           
           if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(showPosition);
-              setInterval(function() {
-                  startLocationTracking();
-              }, 2000);
+              
           } else {
               message.innerHTML = "Geolocation is not supported by this browser.";
           }
@@ -109,7 +107,9 @@
 
         }
 
-        startLocationTracking();
+        setInterval(function() {
+                  startLocationTracking();
+        }, 2000);
 
         
     </script>
